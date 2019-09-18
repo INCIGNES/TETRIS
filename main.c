@@ -1,11 +1,10 @@
 /*
-    Jogo interativo Tetris implementado em linguagem C para uso 
-    no console (terminal de comandos)
+    Jogo Tetris implementado em linguagem C.
 
     Para executar:
         > start programa.exe
 
-    Autor: Augusto Luengo Pereira Nunes
+    Autor: Gabriel Minusso Figueira
     Data: 28/08/2019
 
 */
@@ -20,6 +19,7 @@
 int main(){
     char matrix[ROWS][COLUMNS];
     int posI, posJ;
+    int KeyPressed=0;
 
     //posicao inicial do personagem
     posI = 0;
@@ -32,7 +32,7 @@ int main(){
     system("cls");
 
     //animação do jogo
-    while(1){        
+    while( KeyPressed != ESC){        
         gotoxy(0,0);
 
         //posicionar o @ no meio da tela
@@ -46,6 +46,24 @@ int main(){
         
         //faço a posição da @ ir para a direita
         if(posI < (ROWS-1)) posI++;
+
+        //lendo teclas
+
+        KeyPressed = 0;
+        if(kbhit()) KeyPressed = getch();
+        if(KeyPressed==ARROWS) KeyPressed = getch();
+
+        switch(KeyPressed){
+            case A_KEY:
+            case LEFT:           
+                if(posJ>0) posJ--; 
+                break;
+            case D_KEY:
+            case RIGHT:
+                if(posJ<(COLUMNS-1)) posJ++; 
+                break;
+            
+        }
     }
 
     system("pause");

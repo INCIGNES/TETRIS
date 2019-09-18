@@ -7,12 +7,21 @@
 
 */
 
+#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 //Configuração das dimensões da matriz principal do jogo
 #define COLUMNS 60
 #define ROWS 25
+
+//Configuração de teclas
+#define ESC 27
+#define ARROWS 224
+#define LEFT 75
+#define RIGHT 77
+#define A_KEY 97
+#define D_KEY 100
 
 /*
     Inicializa a matriz principal com 'espaços vazios'
