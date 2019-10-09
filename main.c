@@ -11,6 +11,7 @@
 
 #include "tetris.h"
 #include "display.h"
+#define DEBUG 1
 
 /*
     Parte principal do programa, responsável por iniciar e 
@@ -18,12 +19,18 @@
 */
 int main(){
     char matrix[ROWS][COLUMNS];
-    int posI, posJ;
+    Bloco tijolo;
     int KeyPressed=0;
 
     //posicao inicial do personagem
-    posI = 0;
-    posJ = COLUMNS/2;
+    tijolo.i = 0;
+    tijolo.j = COLUMNS/2;
+    tijolo.tipo = TIPO_I;
+    tijolo.orientacao = ORIENTACAO_UP;
+    tijolo.width = 1;
+    tijolo.height = 4;
+
+
     //inicializando matriz
     init(matrix);
 
@@ -35,17 +42,38 @@ int main(){
     while( KeyPressed != ESC){        
         gotoxy(0,0);
 
+        #if DEBUG == 1
+            printf("@ = (%d, %d)\n", tijolo.i, tijolo.j);
+        #endif
         //posicionar o @ no meio da tela
-        matrix[posI][posJ] = '@';
+        matrix[tijolo.i][tijolo.j-4] =  PIXEL;
+        matrix[tijolo.i][tijolo.j-3] =  PIXEL;
+        matrix[tijolo.i][tijolo.j-2] =  PIXEL;
+        matrix[tijolo.i][tijolo.j-1] =  PIXEL;
+        matrix[tijolo.i][tijolo.j+0] =  PIXEL;
+        matrix[tijolo.i][tijolo.j+1] =  PIXEL;
+        matrix[tijolo.i][tijolo.j+2] =  PIXEL;
+        matrix[tijolo.i][tijolo.j+3] =  PIXEL;
+        matrix[tijolo.i][tijolo.j+4] =  PIXEL;
+
 
         //mostro a matriz na tela
         printMatrix(matrix);
 
-        //faça posição anterior do @ ser apagada
-        matrix[posI][posJ] = ' ';
+        // faz posição anterior do @ ser apagada
+        matrix[tijolo.i][tijolo.j-4] =  EMPTY;
+        matrix[tijolo.i][tijolo.j-3] =  EMPTY;
+        matrix[tijolo.i][tijolo.j-2] =  EMPTY;
+        matrix[tijolo.i][tijolo.j-1] =  EMPTY;
+        matrix[tijolo.i][tijolo.j+0] =  EMPTY;
+        matrix[tijolo.i][tijolo.j+1] =  EMPTY;
+        matrix[tijolo.i][tijolo.j+2] =  EMPTY;
+        matrix[tijolo.i][tijolo.j+3] =  EMPTY;
+        matrix[tijolo.i][tijolo.j+4] =  EMPTY;
+
         
-        //faço a posição da @ ir para a direita
-        if(posI < (ROWS-1)) posI++;
+        //faz a posição da @ ir para a direita
+        if(tijolo.i < (ROWS-1)) tijolo.i++;
 
         //lendo teclas
 
@@ -56,11 +84,11 @@ int main(){
         switch(KeyPressed){
             case A_KEY:
             case LEFT:           
-                if(posJ>0) posJ--; 
+                if(tijolo.j>0) tijolo.j--; 
                 break;
             case D_KEY:
             case RIGHT:
-                if(posJ<(COLUMNS-1)) posJ++; 
+                if(tijolo.j<(COLUMNS-1)) tijolo.j++; 
                 break;
             
         }
